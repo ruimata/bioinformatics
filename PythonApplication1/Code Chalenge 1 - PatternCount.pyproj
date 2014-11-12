@@ -6,7 +6,7 @@
     <ProjectGuid>cdb3f297-bd5c-44d5-a95c-106ba85d66d7</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>PythonApplication1.py</StartupFile>
+    <StartupFile>c1p8_TestCases.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,32 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PythonApplication1.py" />
+    <Compile Include="c1p4_ClumpFinding.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p4_TestCases.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p1to3_CodeChalenges.py" />
+    <Compile Include="c1p1to3_TestCases.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p4_TestCases_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p7_Skew.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p4_sample.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p7_TestCases.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="c1p8_TestCases.py" />
+    <Compile Include="c1p8_CodeChalenges.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
