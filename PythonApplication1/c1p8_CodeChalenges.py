@@ -41,12 +41,40 @@ def FrequentWords1 (text, pattern, d):
             count += 1
     return count
 
+def Neighbours (text, d, neighbors_dict, index, start_text):
+    """Implement Neighbors to find the d-neighborhood of a string.
+
+    Generate a dictionary with all neighbors of a given word with a max Hamming distance of (d)
+    """
+    variation_dict = {"A":"A", "C":"C", "G":"G", "T":"T"}
+    #neighbors_dict = dict()
+    for z in range (0, len(text)):
+        for variation in variation_dict:
+            #if variation <> text[z]:
+            aux = start_text + text[0:z]+variation+text[z+1:]
+            if aux in neighbors_dict:
+                if index not in neighbors_dict[aux][1]:
+                    neighbors_dict[aux][0] += 1
+                    neighbors_dict[aux][1].append(index)
+            else:
+                neighbors_dict[aux] = [1, [index]]
+            if d > 1:
+                neighbors_dict = Neighbours(text[z+1: ], d - 1, neighbors_dict, index, text[0:z] + variation)
+    return neighbors_dict
+
+
 def Frequent_Words_With_Mismatches (text, k, d):
     """ Find the most frequent k-mers with mismatches in a string.
 
     Taking a string, a numeric length for k-mers and a max Humming distance, identify all the most frequent words
     with k length and max humming distance <= d.
     """
-
+    words = dict()
+    # Dictionary of every word of k length and mapping of all of its occurences (including mismatches with max d distance)
     for x in range(0, len(text) - k+1):
-        null #to be completed...
+        pattern = text[x : x + k-1]
+        #Generation of all pattern neighbors with max Hamming distance (d)
+        Neighbours(pattern, d, words, '')
+
+        # checks if current word already exists in 
+        null # For the moment
