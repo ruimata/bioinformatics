@@ -1,3 +1,5 @@
+import c1p1to3_CodeChalenges
+
 def Hamming_Distace (input1, input2):
     """ Compute the hamming distance between two k-mers of equal dimension
 
@@ -59,7 +61,7 @@ def Neighbours (text, d, neighbors_dict, index, start_text):
             else:
                 neighbors_dict[aux] = [1, [index]]
             if d > 1:
-                neighbors_dict = Neighbours(text[z+1: ], d - 1, neighbors_dict, index, text[0:z] + variation)
+                neighbors_dict = Neighbours(text[z+1: ], d - 1, neighbors_dict, index, start_text + text[0:z] + variation)
     return neighbors_dict
 
 
@@ -72,9 +74,12 @@ def Frequent_Words_With_Mismatches (text, k, d):
     words = dict()
     # Dictionary of every word of k length and mapping of all of its occurences (including mismatches with max d distance)
     for x in range(0, len(text) - k+1):
-        pattern = text[x : x + k-1]
+        pattern = text[x : x + k]
         #Generation of all pattern neighbors with max Hamming distance (d)
-        Neighbours(pattern, d, words, '')
-
-        # checks if current word already exists in 
-        null # For the moment
+        words = Neighbours(pattern, d, words, x, '')
+        #Also compute the reverse complement of the same string and compute occurences
+        # TBC words = Neighbours(c1p1to3_CodeChalenges.ReverseComplement(pattern), d, words, x, '')
+    # identify maximum number of occurences in list
+    maxx = max(words.values())
+    keys = [x for x,y in words.items() if y[0] ==maxx[0]]
+    return keys
