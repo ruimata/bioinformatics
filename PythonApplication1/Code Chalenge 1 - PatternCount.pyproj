@@ -49,6 +49,9 @@
     <Compile Include="c1p8_CodeChalenges.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="p1c8_Samples.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

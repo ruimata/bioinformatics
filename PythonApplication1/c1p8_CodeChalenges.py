@@ -64,12 +64,8 @@ def Neighbours (text, d, neighbors_dict, index, start_text):
                 neighbors_dict = Neighbours(text[z+1: ], d - 1, neighbors_dict, index, start_text + text[0:z] + variation)
     return neighbors_dict
 
-
-def Frequent_Words_With_Mismatches (text, k, d):
-    """ Find the most frequent k-mers with mismatches in a string.
-
-    Taking a string, a numeric length for k-mers and a max Humming distance, identify all the most frequent words
-    with k length and max humming distance <= d.
+def Build_Frequent_Words_With_Mismatches(text, k, d, reverse):
+    """ Build frequency tree, based on number of occurrences of a pattern (and all patterns at a d distance)
     """
     words = dict()
     # Dictionary of every word of k length and mapping of all of its occurences (including mismatches with max d distance)
@@ -77,9 +73,52 @@ def Frequent_Words_With_Mismatches (text, k, d):
         pattern = text[x : x + k]
         #Generation of all pattern neighbors with max Hamming distance (d)
         words = Neighbours(pattern, d, words, x, '')
-        #Also compute the reverse complement of the same string and compute occurences
-        # TBC words = Neighbours(c1p1to3_CodeChalenges.ReverseComplement(pattern), d, words, x, '')
+        if reverse:
+            words = Neighbours(c1p1to3_CodeChalenges.ReverseComplement(pattern), d, words, x, '')
+    return words
+
+
+def Frequent_Words_With_Mismatches (text, k, d, reverse):
+    """ Find the most frequent k-mers with mismatches in a string.
+
+    Taking a string, a numeric length for k-mers and a max Humming distance, identify all the most frequent words
+    with k length and max humming distance <= d.
+    """
+    
+    # Generate frequency dictionary of pattern occurrences
+    words1 = Build_Frequent_Words_With_Mismatches(text, k, d, reverse)
+    #words2 = Build_Frequent_Words_With_Mismatches(c1p1to3_CodeChalenges.ReverseComplement(text), k, d, reverse)
+    words = dict()
+    #for each in words1:
+    #    words[each] = words1[each][0] + words2[c1p1to3_CodeChalenges.ReverseComplement(each)][0]
+    for each in words1:
+        words[each] = words1[each][0]
+    #for each in words2:
+    #    words[c1p1to3_CodeChalenges.ReverseComplement(each)] += words2[each][0]
+
     # identify maximum number of occurences in list
     maxx = max(words.values())
-    keys = [x for x,y in words.items() if y[0] ==maxx[0]]
+    #keys = [item[0] for item in words.items() if item[1] == maxx]
+    keys = [x for x,y in words.items() if y ==maxx]
+    #keys = [x for x,y in words.items() if y[0] ==maxx[0]]
+    #keys = [item[0] for item in words.items() if item[1][0] == maxx[0]]
     return keys
+
+def Frequent_Words_With_Mismatches_and_ReverseComplements (text, k, d):
+    """ Find the most frequent k-mers with mismatches and reverse complements in a string.
+
+    Taking a string, a numeric length for k-mers and a max Humming distance, identify all the most frequent words
+    with k length and max humming distance <= d that maximize the sum Countd(Text, Pattern)+ Countd(Text, Pattern)
+    """
+
+    # Generate frequency dictionary of pattern occurrences
+    words = Build_Frequent_Words_With_Mismatches(text, k, d, True)
+    #words = Build_Frequent_Words_With_Mismatches(c1p1to3_CodeChalenges.ReverseComplement(text), k, d)
+
+    # Build a paired (pattern + reverse complement)
+    #pairs = dict()
+    #for pattern in words:
+    #    pairs[pattern+c1p1to3_CodeChalenges.ReverseComplement(pattern)] = [1, []]
+
+    return words
+
